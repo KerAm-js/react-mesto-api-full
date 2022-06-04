@@ -1,0 +1,21 @@
+{
+  "extends": "airbnb-base",
+  "rules": {
+    "no-tabs": "off",
+    "indent": "off",
+    "linebreak-style": 0,
+    "no-useless-escape": "off",
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allow": [
+          "_id"
+        ]
+      }
+    ],
+    "object-curly-newline": ["error", {
+      "ObjectPattern": { "multiline": true },
+      "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+    }]
+  }
+}

@@ -7,6 +7,7 @@ const { errors, celebrate, Joi } = require('celebrate');
 const userRouter = require('./routes/user');
 const cardRouter = require('./routes/card');
 const userController = require('./controllers/user');
+const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { pageNotFound } = require('./middlewares/pageNotFound');
 const { auth } = require('./middlewares/auth');
@@ -32,6 +33,7 @@ const { PORT = 3000 } = process.env;
 
 app.use(requestLogger);
 app.use(limiter);
+app.use(cors);
 app.use(helmet());
 app.use(express.json());
 app.use(cookieParser());
