@@ -24,14 +24,14 @@ class Api {
 
   getUserData() {
     return fetch(this._userUrl, {
-      credentials: 'same-origin',
+      credentials: 'include',
     })
       .then(res => this._checkResponse(res));
   }
 
   getCards() {
     return fetch(this._cardsUrl, {
-      credentials: 'same-origin',
+      credentials: 'include',
     })
       .then(res => this._checkResponse(res));
   }
@@ -39,7 +39,7 @@ class Api {
   addCard(name, link) {
     return fetch(this._cardsUrl, {
       method: 'POST',
-      credentials: 'same-origin',
+      credentials: 'include',
       headers: {
         'Content-type': 'application/json'
       },
@@ -54,7 +54,7 @@ class Api {
   deleteCard = id => {
     return fetch(`${this._cardsUrl}/${id}`, {
       method: 'DELETE',
-      credentials: 'same-origin',
+      credentials: 'include',
     })
       .then(res => this._checkResponse(res));
   }
@@ -62,7 +62,7 @@ class Api {
   setLike = cardId => {
     return fetch(`${this._cardsUrl}/${cardId}${this._likeAddress}`, {
       method: 'PUT',
-      credentials: 'same-origin',
+      credentials: 'include',
     })
       .then(res => this._checkResponse(res));
   }
@@ -70,7 +70,7 @@ class Api {
   deleteLike = cardId => {
     return fetch(`${this._cardsUrl}/${cardId}${this._likeAddress}`, {
       method: 'DELETE',
-      credentials: 'same-origin',
+      credentials: 'include',
     })
       .then(res => this._checkResponse(res));
   }
@@ -78,7 +78,7 @@ class Api {
   editProfile(name, about) {
     return fetch(this._userUrl, {
       method: 'PATCH',
-      credentials: 'same-origin',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -93,7 +93,7 @@ class Api {
   editAvatar(avatar) {
     return fetch(`${this._avatarUrl}`, {
       method: 'PATCH',
-      credentials: 'same-origin',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
