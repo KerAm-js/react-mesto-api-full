@@ -47,6 +47,7 @@ export const authWithJWT = () => {
   //jwt should be in cookies
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
+    credentials: 'same-origin',
     headers: {
       "Content-Type": "application/json",
     }

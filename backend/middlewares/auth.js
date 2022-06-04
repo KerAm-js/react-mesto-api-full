@@ -6,6 +6,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.auth = (req, res, next) => {
   const { token } = req.cookies;
+
   if (!token) {
     next(new UnauthorizedError('Ошибка авторизации'));
     return;

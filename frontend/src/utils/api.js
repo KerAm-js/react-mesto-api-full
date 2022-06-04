@@ -23,18 +23,23 @@ class Api {
   }
 
   getUserData() {
-    return fetch(this._userUrl)
+    return fetch(this._userUrl, {
+      credentials: 'same-origin',
+    })
       .then(res => this._checkResponse(res));
   }
 
   getCards() {
-    return fetch(this._cardsUrl)
+    return fetch(this._cardsUrl, {
+      credentials: 'same-origin',
+    })
       .then(res => this._checkResponse(res));
   }
 
   addCard(name, link) {
     return fetch(this._cardsUrl, {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
         'Content-type': 'application/json'
       },
@@ -49,6 +54,7 @@ class Api {
   deleteCard = id => {
     return fetch(`${this._cardsUrl}/${id}`, {
       method: 'DELETE',
+      credentials: 'same-origin',
     })
       .then(res => this._checkResponse(res));
   }
@@ -56,6 +62,7 @@ class Api {
   setLike = cardId => {
     return fetch(`${this._cardsUrl}/${cardId}${this._likeAddress}`, {
       method: 'PUT',
+      credentials: 'same-origin',
     })
       .then(res => this._checkResponse(res));
   }
@@ -63,6 +70,7 @@ class Api {
   deleteLike = cardId => {
     return fetch(`${this._cardsUrl}/${cardId}${this._likeAddress}`, {
       method: 'DELETE',
+      credentials: 'same-origin',
     })
       .then(res => this._checkResponse(res));
   }
@@ -70,6 +78,7 @@ class Api {
   editProfile(name, about) {
     return fetch(this._userUrl, {
       method: 'PATCH',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       },
@@ -84,6 +93,7 @@ class Api {
   editAvatar(avatar) {
     return fetch(`${this._avatarUrl}`, {
       method: 'PATCH',
+      credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json'
       },
