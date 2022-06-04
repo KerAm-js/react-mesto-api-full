@@ -1,0 +1,19 @@
+.form__button_type_auth {
+  background-color: #fff;
+  color: #000;
+  font-style: normal;
+  font-weight: 400;
+  height: 50px;
+}
+
+.form__button_type_auth:hover {
+  opacity: 0.85;
+}
+
+@media screen and (max-width: 510px) {
+  .form__button {
+    height: 46px;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}

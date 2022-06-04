@@ -1,0 +1,32 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  max-width: 880px;
+  min-width: 320px;
+  box-sizing: border-box;
+  color: #ffffff;
+  font-family: Inter, Arial, sans-serif;
+  transition: transform .2s linear;
+}
+
+@media screen and (max-width: 1024px) {
+  .content {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media screen and (max-width: 536px) {
+  .content {
+    transform: translateY(-143px);
+  }
+}

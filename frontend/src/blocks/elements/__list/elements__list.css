@@ -1,0 +1,25 @@
+.elements__list {
+  margin: 0;
+  padding: 50px 0 0;
+  list-style: none;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(282px, auto));
+  grid-row-gap: 20px;
+  grid-column-gap: 17px;
+}
+
+@media screen and (max-width: 768px) {
+  .elements__list {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .elements__list {
+    padding-left: 19px;
+    padding-right: 19px;
+    padding-top: 36px;
+  }
+}

@@ -1,0 +1,15 @@
+.header__menu-burger {
+  width: 24px;
+  height: 24px;
+  margin-right: 30px;
+}
+
+.header_auth .header__menu-burger {
+  display: none;
+}
+
+@media screen and (min-width: 537px) {
+  .header__menu-burger {
+    display: none;
+  }  
+}

@@ -1,0 +1,30 @@
+.profile__username {
+  grid-area: username;
+  margin: 0;
+  padding: 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 42px;
+  line-height: 48px;
+  min-height: 48px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__username {
+    font-size: 32px;
+    line-height: 1.2;
+    min-height: calc((32px * 1.2));
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .profile__username {
+    font-size: 27px;
+    line-height: 33px;
+    min-height: 33px;
+  }
+}

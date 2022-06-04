@@ -1,0 +1,12 @@
+.modal__title_type_tooltip {
+  margin: 32px 0 0;
+  text-align: center;
+}
+
+@media screen and (max-width: 575px) {
+  .modal__title_type_tooltip {
+    margin-top: 40px;
+    font-size: 20px;
+    line-height: 24px;
+  }
+}

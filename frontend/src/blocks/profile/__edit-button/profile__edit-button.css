@@ -1,0 +1,37 @@
+.profile__edit-button {
+  box-sizing: border-box;
+  margin-left: 18px;
+  grid-area: edit-button;
+  justify-self: start;
+  align-self: end;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../../images/VectorEdit.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
+}
+
+.profile__edit-button:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 680px) {
+  .profile__edit-button {
+    justify-self: start;
+    margin-left: 14px;
+  }
+}
+
+@media screen and (max-width: 410px) {
+  .profile__edit-button {
+    width: 18px;
+    height: 18px;
+    margin-left: 10px;
+  }
+}
+

@@ -1,0 +1,7 @@
+.element__info {
+  margin: 23px 0;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

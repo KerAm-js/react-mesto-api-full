@@ -1,0 +1,10 @@
+.modal__place-name {
+  width: 100%;
+  max-width: 75vw;
+  padding: 0;
+  margin: 10px 0 0;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FFFFFF;
+}

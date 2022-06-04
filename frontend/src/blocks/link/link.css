@@ -1,0 +1,17 @@
+.link {
+  margin-top: 15px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #FFFFFF;
+  background-color: none;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 510px) {
+  .link {
+    margin-top: 20px;
+  }
+}

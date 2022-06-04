@@ -1,0 +1,25 @@
+.header__account-button {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #fff;
+  margin-top: 6px;
+}
+
+.header__account-button:hover {
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 768px) {
+  .header__account-button {
+    margin-right: 30px;
+  }
+}
+
+@media screen and (max-width: 536px) {
+  .header__account-button {
+    margin-top: 0;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

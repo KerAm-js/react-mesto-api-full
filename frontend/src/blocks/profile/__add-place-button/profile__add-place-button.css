@@ -1,0 +1,26 @@
+.profile__add-place-button {
+  padding: 0;
+  margin: 0 0 0 auto;
+  width: 150px;
+  min-height: 50px;
+  border: 2px solid #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../../images/VectorPlus.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 22px 22px;
+}
+
+.profile__add-place-button:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 680px) {
+  .profile__add-place-button {
+    width: 100%;
+    margin: 36px 0 0;
+    background-size: 16px 16px;
+  }
+}
