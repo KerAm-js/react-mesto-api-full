@@ -1,4 +1,4 @@
-const allowedCors = [];
+const allowedCors = ['https://amir.projects.mesto.nomoredomains.sbs'];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
 module.exports.simpleCors = (req, res, next) => {

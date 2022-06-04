@@ -1,18 +1,14 @@
-import { token, groupId } from "./constants";
+import { BASE_URL } from './auth';
 
 class Api {
   constructor({
     serverUrl, 
-    token, 
-    groupId, 
     userAddress,
     avatarAddress,
     cardsAddress,
     likeAddress,
   }) {
     this._serverUrl = serverUrl;
-    this._token = token;
-    this._groupId = groupId;
     this._userUrl = `${this._serverUrl}${userAddress}`;
     this._avatarUrl = `${this._userUrl}${avatarAddress}`;
     this._cardsUrl = `${this._serverUrl}${cardsAddress}`;
@@ -27,20 +23,12 @@ class Api {
   }
 
   getUserData() {
-    return fetch(this._userUrl, {
-      headers: {
-        authorization: this._token
-      }
-    })
+    return fetch(this._userUrl)
       .then(res => this._checkResponse(res));
   }
 
   getCards() {
-    return fetch(this._cardsUrl, {
-      headers: {
-        authorization: this._token
-      }
-    })
+    return fetch(this._cardsUrl)
       .then(res => this._checkResponse(res));
   }
 
@@ -48,7 +36,6 @@ class Api {
     return fetch(this._cardsUrl, {
       method: 'POST',
       headers: {
-        authorization: this._token,
         'Content-type': 'application/json'
       },
       body: JSON.stringify({
@@ -62,9 +49,6 @@ class Api {
   deleteCard = id => {
     return fetch(`${this._cardsUrl}/${id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._token,
-      },
     })
       .then(res => this._checkResponse(res));
   }
@@ -72,9 +56,6 @@ class Api {
   setLike = cardId => {
     return fetch(`${this._cardsUrl}/${cardId}${this._likeAddress}`, {
       method: 'PUT',
-      headers: {
-        authorization: this._token
-      }
     })
       .then(res => this._checkResponse(res));
   }
@@ -82,9 +63,6 @@ class Api {
   deleteLike = cardId => {
     return fetch(`${this._cardsUrl}/${cardId}${this._likeAddress}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._token
-      }
     })
       .then(res => this._checkResponse(res));
   }
@@ -93,7 +71,6 @@ class Api {
     return fetch(this._userUrl, {
       method: 'PATCH',
       headers: {
-        authorization: this._token,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -108,7 +85,6 @@ class Api {
     return fetch(`${this._avatarUrl}`, {
       method: 'PATCH',
       headers: {
-        authorization: this._token,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -120,9 +96,7 @@ class Api {
 }
 
 export default new Api({
-  serverUrl: `https://nomoreparties.co/v1/${groupId}`,
-  token,
-  groupId,
+  serverUrl: BASE_URL,
   userAddress: '/users/me',
   avatarAddress: `/avatar`,
   cardsAddress: '/cards',

@@ -1,9 +1,9 @@
-export const BASE_URL = 'https://auth.nomoreparties.co';
+export const BASE_URL = 'https://api.amir.projects.mesto.nomoredomains.xyz';
 
 const checkResponse = (res) => {
   try {
     if (res.ok) {
-      return res.json()
+      return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`)
   } catch (e) {
@@ -43,12 +43,12 @@ export const auth = (email, password) => {
       })
 }
 
-export const authWithJWT = (jwt) => {
+export const authWithJWT = () => {
+  //jwt should be in cookies
   return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${jwt}`
     }
   })
     .then(res => {

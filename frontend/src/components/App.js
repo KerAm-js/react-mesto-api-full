@@ -153,13 +153,10 @@ function App() {
   const authorise = () => {
     auth(authEmail, authPassword)
       .then(res => {
-        if (res.token) {
-          clearAuthInputs()
-          setCurrentUserEmail(authEmail)
-          localStorage.setItem('jwt', res.token)
-          setLoggedIn(true)
-          history.push('/')
-        }
+        clearAuthInputs()
+        setCurrentUserEmail(authEmail)
+        setLoggedIn(true)
+        history.push('/')
       })
       .catch(e => {
         console.log(e)
@@ -181,24 +178,20 @@ function App() {
   }
 
   const autoAuth = () => {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      authWithJWT(jwt)
-        .then(res => {
-          if (res.data.email) {
-            setCurrentUserEmail(res.data.email)
-            setLoggedIn(true)
-            history.push('/')
-          }
-        })
-        .catch(e => {
-          console.log(e)
-        })
-    }
+    authWithJWT()
+      .then(res => {
+        if (res.data.email) {
+          setCurrentUserEmail(res.data.email)
+          setLoggedIn(true)
+          history.push('/')
+        }
+      })
+      .catch(e => {
+        console.log(e)
+      })
   }
 
   const logout = () => {
-    localStorage.removeItem('jwt');
     setCurrentUserEmail('');
     setLoggedIn(false);
     history.push('/sign-in');
