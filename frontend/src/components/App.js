@@ -162,6 +162,7 @@ function App() {
         if (res.token) {
           clearAuthInputs()
           setCurrentUserEmail(authEmail)
+          setCurrentUser(res.user)
           localStorage.setItem('jwt', res.token)
           setLoggedIn(true)
           history.push('/')
@@ -207,6 +208,13 @@ function App() {
   const logout = () => {
     localStorage.removeItem('jwt');
     setCurrentUserEmail('');
+    setCurrentUser({
+      name: '',
+      avatar: '',
+      about: '',
+      _id: '',
+      cohort: '',
+    })
     setLoggedIn(false);
     history.push('/sign-in');
   }
