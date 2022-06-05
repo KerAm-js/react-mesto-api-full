@@ -1,5 +1,4 @@
 export const BASE_URL = 'https://api.amir.projects.mesto.nomoredomains.xyz';
-// export const BASE_URL = 'https://localhost:3000';
 
 const checkResponse = (res) => {
   try {
