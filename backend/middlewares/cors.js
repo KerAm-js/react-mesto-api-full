@@ -1,7 +1,5 @@
 const allowedCors = [
   'https://amir.projects.mesto.nomoredomains.sbs',
-  'http://amir.projects.mesto.nomoredomains.sbs',
-  'http://localhost:3001',
   'https://locahost:3001',
 ];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
