@@ -1,3 +1,5 @@
+export const token = '2df8850b-7608-4ffb-b875-dcadfa107eeb';
+export const groupId = 'cohort36';
 export const profilePopupSelector = '.modal_type_profile';
 export const newPlacePopupSelector = '.modal_type_place';
 export const usernameSelector = '.profile__username';

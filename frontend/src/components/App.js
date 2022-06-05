@@ -76,7 +76,8 @@ function App() {
   }
 
   const handleUpdateUser = ({name, about}) => {
-    api.editProfile(name, about)
+    const jwt = localStorage.getItem('jwt');
+    api.editProfile(name, about, jwt)
       .then(userData => {
         setCurrentUser(userData)
         closeAllPopups()
@@ -85,7 +86,8 @@ function App() {
   }
 
   const handleUpdateAvatar = avatar => {
-    api.editAvatar(avatar) 
+    const jwt = localStorage.getItem('jwt');
+    api.editAvatar(avatar, jwt) 
       .then(userData => {
         setCurrentUser(userData)
         closeAllPopups()
@@ -94,7 +96,8 @@ function App() {
   }
 
   const handleAddPlace = (name, link) => {
-    api.addCard(name, link)
+    const jwt = localStorage.getItem('jwt');
+    api.addCard(name, link, jwt)
       .then(card => {
         setCards([card, ...cards])
         closeAllPopups()
@@ -114,12 +117,13 @@ function App() {
 
   const handleCardLike = card => {
     const isLiked = card.likes.some(user => user._id === currentUser._id);
+    const jwt = localStorage.getItem('jwt');
     if (!isLiked) {
-      api.setLike(card._id)
+      api.setLike(card._id, jwt)
         .then(card => setCards(prev => prev.map(item => item._id === card._id ? card : item)))
         .catch(e => console.log(e))
     } else {
-      api.deleteLike(card._id)
+      api.deleteLike(card._id, jwt)
         .then(card => setCards(prev => prev.map(item => item._id === card._id ? card : item)))
         .catch(e => console.log(e))
     }
@@ -129,7 +133,8 @@ function App() {
     setIsConfirmPopupOpened(true);
     setAction(() => {
       return () => {
-        api.deleteCard(id)
+        const jwt = localStorage.getItem('jwt');
+        api.deleteCard(id, jwt)
           .then(() => setCards(prev => prev.filter(card => card._id !== id)))
           .catch(e => console.log(e))
       }
@@ -151,12 +156,16 @@ function App() {
   }
 
   const authorise = () => {
-    auth(authEmail, authPassword)
+    const jwt = localStorage.getItem('jwt');
+    auth(authEmail, authPassword, jwt)
       .then(res => {
-        clearAuthInputs()
-        setCurrentUserEmail(authEmail)
-        setLoggedIn(true)
-        history.push('/')
+        if (res.token) {
+          clearAuthInputs()
+          setCurrentUserEmail(authEmail)
+          localStorage.setItem('jwt', res.token)
+          setLoggedIn(true)
+          history.push('/')
+        }
       })
       .catch(e => {
         console.log(e)
@@ -179,20 +188,24 @@ function App() {
   }
 
   const autoAuth = () => {
-    authWithJWT()
-      .then(res => {
-        if (res.data.email) {
-          setCurrentUserEmail(res.data.email)
-          setLoggedIn(true)
-          history.push('/')
-        }
-      })
-      .catch(e => {
-        console.log(e)
-      })
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      authWithJWT(jwt)
+        .then(res => {
+          if (res.data.email) {
+            setCurrentUserEmail(res.data.email)
+            setLoggedIn(true)
+            history.push('/')
+          }
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    }
   }
 
   const logout = () => {
+    localStorage.removeItem('jwt');
     setCurrentUserEmail('');
     setLoggedIn(false);
     history.push('/sign-in');
@@ -207,13 +220,14 @@ function App() {
   }
 
   useEffect(() => {
-    api.getUserData()
+    const jwt = localStorage.getItem('jwt');
+    api.getUserData(jwt)
       .then(userData => setCurrentUser(userData))
       .catch(e => console.log(e))
-    api.getCards()
+    api.getCards(jwt)
       .then(cards => setCards(cards))
       .catch(e => console.log(e))
-    autoAuth();
+    autoAuth(jwt);
     document.addEventListener('keydown', closeByEscape);
     return () => {
       document.removeEventListener('keydown', closeByEscape);
