@@ -76,7 +76,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: 3600 * 24 * 7 });
       res
-        .cookie('token', token, { maxAge: 3600000 * 24 * 7, httpOnly: true, secure: true, sameSite: true })
+        .cookie('token', token, { maxAge: 3600000 * 24 * 7, httpOnly: true, sameSite: true })
         .status(200)
         .send({ message: 'Вы успешно авторизировались' });
     })
