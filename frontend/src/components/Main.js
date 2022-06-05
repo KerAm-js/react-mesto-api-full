@@ -13,7 +13,6 @@ export default function Main({
 }) {
 
   const currentUser = useContext(CurrentUserContext);
-
   return (
     <main className="main">
 

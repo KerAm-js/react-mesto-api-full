@@ -40,9 +40,10 @@ module.exports.createCard = (req, res, next) => {
 
 module.exports.likeCard = (req, res, next) => {
   const { cardId } = req.params;
+  const { _id } = req.user;
   Card.findByIdAndUpdate(cardId, {
     $addToSet: {
-      likes: cardId,
+      likes: _id,
     },
   }, { new: true })
     .then((result) => isEntityFound(res, result, 'Карточка не найдена'))
@@ -51,9 +52,10 @@ module.exports.likeCard = (req, res, next) => {
 
 module.exports.dislikeCard = (req, res, next) => {
   const { cardId } = req.params;
+  const { _id } = req.user;
   Card.findByIdAndUpdate(cardId, {
     $pull: {
-      likes: cardId,
+      likes: _id,
     },
   }, { new: true })
     .then((result) => isEntityFound(res, result, 'Карточка не найдена'))

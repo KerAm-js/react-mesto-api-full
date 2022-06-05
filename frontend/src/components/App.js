@@ -116,11 +116,14 @@ function App() {
   }
 
   const handleCardLike = card => {
-    const isLiked = card.likes.some(user => user._id === currentUser._id);
+    const isLiked = card.likes.some(id => id === currentUser._id);
     const jwt = localStorage.getItem('jwt');
     if (!isLiked) {
       api.setLike(card._id, jwt)
-        .then(card => setCards(prev => prev.map(item => item._id === card._id ? card : item)))
+        .then(card => {
+          console.log(card);
+          setCards(prev => prev.map(item => item._id === card._id ? card : item))
+        })
         .catch(e => console.log(e))
     } else {
       api.deleteLike(card._id, jwt)
@@ -178,7 +181,7 @@ function App() {
       .then(res => {
         openInfoTooltip('success')
         clearRegisterInputs()
-        setAuthEmail(res.data.email)
+        setAuthEmail(res.email)
         history.push('/signin')
       })
       .catch(e => {
@@ -192,8 +195,8 @@ function App() {
     if (jwt) {
       authWithJWT(jwt)
         .then(res => {
-          if (res.data.email) {
-            setCurrentUserEmail(res.data.email)
+          if (res.email) {
+            setCurrentUserEmail(res.email)
             setLoggedIn(true)
             history.push('/')
           }
