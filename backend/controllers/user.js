@@ -18,7 +18,7 @@ module.exports.getUsers = (req, res, next) => {
 
 module.exports.createUser = (req, res, next) => {
   const { name, about, avatar, email } = req.body;
-  return bcrypt.hash(req.body.password, 10)
+  bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({ name, about, avatar, email, password: hash }))
     .then((result) => {
       const { password, ...userData } = result.toObject();
