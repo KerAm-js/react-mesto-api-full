@@ -120,10 +120,7 @@ function App() {
     const jwt = localStorage.getItem('jwt');
     if (!isLiked) {
       api.setLike(card._id, jwt)
-        .then(card => {
-          console.log(card);
-          setCards(prev => prev.map(item => item._id === card._id ? card : item))
-        })
+        .then(card => setCards(prev => prev.map(item => item._id === card._id ? card : item)))
         .catch(e => console.log(e))
     } else {
       api.deleteLike(card._id, jwt)
