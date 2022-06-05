@@ -93,7 +93,7 @@ class Api {
   editAvatar(avatar) {
     return fetch(`${this._avatarUrl}`, {
       method: 'PATCH',
-      credentials: 'same-origin',
+      credentials: "omit",
       headers: {
         'Content-Type': 'application/json'
       },
