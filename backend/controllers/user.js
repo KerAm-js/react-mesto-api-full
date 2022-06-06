@@ -5,6 +5,7 @@ const User = require('../models/user');
 const BadRequestError = require('../errors/BadRequestError');
 const { isEntityFound } = require('../utils/utils');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+const ConflictError = require('../errors/ConflictError');
 
 dotenv.config();
 
@@ -24,14 +25,30 @@ module.exports.createUser = (req, res, next) => {
       const { password, ...userData } = result.toObject();
       res.status(201).send({ ...userData });
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким email уже существует'));
+        return;
+      }
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Некорректные данные пользователя'));
+        return;
+      }
+      next(err);
+    });
 };
 
 module.exports.getUserById = (req, res, next) => {
   const { userId } = req.params;
   User.findById(userId)
     .then((user) => isEntityFound(res, user, 'Пользователь не найден'))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Некорректные данные пользователя'));
+        return;
+      }
+      next(err);
+    });
 };
 
 module.exports.updateProfile = (req, res, next) => {
@@ -43,7 +60,17 @@ module.exports.updateProfile = (req, res, next) => {
     upsert: false,
   })
     .then((result) => isEntityFound(res, result, 'Пользователь не найден'))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Некорректные данные пользователя'));
+        return;
+      }
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Некорректные данные пользователя'));
+        return;
+      }
+      next(err);
+    });
 };
 
 module.exports.updateAvatar = (req, res, next) => {
@@ -55,7 +82,17 @@ module.exports.updateAvatar = (req, res, next) => {
     upsert: false,
   })
     .then((result) => isEntityFound(res, result, 'Пользователь не найден'))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Некорректная ссылка'));
+        return;
+      }
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Некорректные данные пользователя'));
+        return;
+      }
+      next(err);
+    });
 };
 
 module.exports.login = (req, res, next) => {
@@ -77,9 +114,15 @@ module.exports.login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: 3600 * 24 * 7 });
       res
         .status(200)
-        .send({ message: 'Вы успешно авторизировались', token, user });
+        .send({ message: 'Вы успешно авторизировались', token });
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Некорректная ссылка'));
+        return;
+      }
+      next(err);
+    });
 };
 
 module.exports.getUserInfo = (req, res, next) => {
@@ -91,5 +134,11 @@ module.exports.getUserInfo = (req, res, next) => {
       }
       return res.status(200).send(user);
     })
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Некорректные данные пользователя'));
+        return;
+      }
+      next(err);
+    });
 };

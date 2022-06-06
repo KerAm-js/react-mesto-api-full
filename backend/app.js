@@ -8,7 +8,6 @@ const { errors, celebrate, Joi } = require('celebrate');
 const userRouter = require('./routes/user');
 const cardRouter = require('./routes/card');
 const userController = require('./controllers/user');
-// const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { pageNotFound } = require('./middlewares/pageNotFound');
 const { auth } = require('./middlewares/auth');
@@ -49,7 +48,7 @@ app.get('/crash-test', () => {
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(6),
+    password: Joi.string().required(),
   }),
 }), userController.login);
 app.post('/signup', celebrate({
@@ -58,12 +57,12 @@ app.post('/signup', celebrate({
     about: Joi.string().min(2).max(30),
     avatar: Joi.string().pattern(new RegExp(myRegex)),
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(6),
+    password: Joi.string().required(),
   }),
 }), userController.createUser);
 app.use('/users', auth, userRouter);
 app.use('/cards', auth, cardRouter);
-app.use('/', pageNotFound);
+app.use('/', auth, pageNotFound);
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandling);

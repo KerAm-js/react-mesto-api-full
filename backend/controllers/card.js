@@ -1,3 +1,4 @@
+const BadRequestError = require('../errors/BadRequestError');
 const ForbiddenError = require('../errors/ForbiddenError');
 const NotFoundError = require('../errors/NotFoundError');
 const Card = require('../models/card');
@@ -35,7 +36,13 @@ module.exports.createCard = (req, res, next) => {
   const currentUser = req.user;
   Card.create({ name, link, owner: currentUser })
     .then((result) => res.status(201).send(result))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        next(new BadRequestError('Некорректные данные карточки'));
+        return;
+      }
+      next(err);
+    });
 };
 
 module.exports.likeCard = (req, res, next) => {
@@ -47,7 +54,13 @@ module.exports.likeCard = (req, res, next) => {
     },
   }, { new: true })
     .then((result) => isEntityFound(res, result, 'Карточка не найдена'))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Некорректные данные карточки'));
+        return;
+      }
+      next(err);
+    });
 };
 
 module.exports.dislikeCard = (req, res, next) => {
@@ -59,5 +72,11 @@ module.exports.dislikeCard = (req, res, next) => {
     },
   }, { new: true })
     .then((result) => isEntityFound(res, result, 'Карточка не найдена'))
-    .catch(next);
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Некорректные данные карточки'));
+        return;
+      }
+      next(err);
+    });
 };

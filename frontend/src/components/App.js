@@ -155,6 +155,18 @@ function App() {
     setRegisterPassword('');
   }
 
+  const uploadData = () => {
+    const jwt = localStorage.getItem('jwt');
+    api.getUserData(jwt)
+      .then(userData => {
+        setCurrentUser(userData)
+      })
+      .catch(e => console.log(e))
+    api.getCards(jwt)
+      .then(cards => setCards(cards))
+      .catch(e => console.log(e))
+  }
+
   const authorise = () => {
     const jwt = localStorage.getItem('jwt');
     auth(authEmail, authPassword, jwt)
@@ -162,8 +174,8 @@ function App() {
         if (res.token) {
           clearAuthInputs()
           setCurrentUserEmail(authEmail)
-          setCurrentUser(res.user)
           localStorage.setItem('jwt', res.token)
+          uploadData()
           setLoggedIn(true)
           history.push('/')
         }
@@ -177,6 +189,7 @@ function App() {
   const register = () => {
     reg(registerEmail, registerPassword) 
       .then(res => {
+        console.log(res);
         openInfoTooltip('success')
         clearRegisterInputs()
         setAuthEmail(res.email)
@@ -195,6 +208,7 @@ function App() {
         .then(res => {
           if (res.email) {
             setCurrentUserEmail(res.email)
+            uploadData()
             setLoggedIn(true)
             history.push('/')
           }
@@ -229,13 +243,7 @@ function App() {
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
-    api.getUserData(jwt)
-      .then(userData => setCurrentUser(userData))
-      .catch(e => console.log(e))
-    api.getCards(jwt)
-      .then(cards => setCards(cards))
-      .catch(e => console.log(e))
-    autoAuth(jwt);
+    autoAuth(jwt)
     document.addEventListener('keydown', closeByEscape);
     return () => {
       document.removeEventListener('keydown', closeByEscape);
