@@ -97,7 +97,7 @@ module.exports.updateAvatar = (req, res, next) => {
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  return User.findOne({ email }).select('+password')
+  User.findOne({ email }).select('+password')
     .then((user) => {
       if (!user) {
         return Promise.reject(new UnauthorizedError('Неверные данные пользователя'));
@@ -118,7 +118,7 @@ module.exports.login = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        next(new BadRequestError('Некорректная ссылка'));
+        next(new BadRequestError('Некорректный email'));
         return;
       }
       next(err);

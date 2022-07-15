@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const BadRequestError = require('../errors/BadRequestError');
+const { myRegex } = require('../utils/utils');
 
 const cardSchema = new mongoose.Schema({
   name: {
@@ -13,8 +14,7 @@ const cardSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => {
-        const regex = /(https?:\/\/)(www\.)?([\da-z\.\-]+)\.([a-z\.]{2,6})(\/[\da-z\-\._~:\/?#\[\]@!$&'\(\)*+,;=])*#?/g;
-        const isValid = regex.test(v);
+        const isValid = myRegex.test(v);
         if (!isValid) {
           return Promise.reject(new BadRequestError('Некорректная ссылка'));
         }
